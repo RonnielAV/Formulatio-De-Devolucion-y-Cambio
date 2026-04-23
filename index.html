@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -224,16 +225,22 @@
     }
 
     .table-wrap {
+      display: block;
       overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
       margin-bottom: 24px;
       border: 1px solid var(--line);
       border-radius: 14px;
+      max-width: 100%;
     }
 
     table {
-      width: 100%;
-      border-collapse: collapse;
+      width: max-content;
       min-width: 980px;
+      table-layout: fixed;
+      border-collapse: collapse;
       background: #fff;
     }
 
@@ -546,8 +553,110 @@
         grid-template-columns: 1fr;
       }
 
-      .container { margin: 16px auto; }
-      .header, .main-form, .sidebar, .footer { padding: 20px; }
+      .container {
+        margin: 0;
+        padding: 0;
+      }
+
+      .app-shell {
+        border-radius: 0;
+        overflow: visible;
+      }
+
+      .header, .main-form, .sidebar, .footer {
+        padding: 16px;
+      }
+
+      .brand-row {
+        align-items: flex-start;
+      }
+
+      .marketup-logo {
+        font-size: 42px;
+      }
+
+      .table-actions {
+        align-items: stretch;
+      }
+
+      .inline-select,
+      .mini-btn {
+        width: 100%;
+        max-width: none;
+      }
+
+      .table-wrap {
+        overflow: visible;
+        margin-left: 0;
+        margin-right: 0;
+        border: 0;
+        border-radius: 0;
+      }
+
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none;
+      }
+
+      table {
+        min-width: 0;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 14px;
+        background: transparent;
+      }
+
+      .product-row {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+      }
+
+      td {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
+        padding: 12px 14px;
+        border: 0;
+        border-bottom: 1px solid #edf1f6;
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #64748b;
+      }
+
+      .check-cell {
+        width: 100%;
+        text-align: left;
+      }
+
+      .check-cell .checkbox {
+        margin: 0;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
     }
 
     @media print {
@@ -865,13 +974,13 @@
       row.dataset.product = template.name;
       row.dataset.price = template.price;
       row.innerHTML =
-        '<td class="check-cell"><input type="checkbox" class="checkbox product-check" checked /></td>' +
-        '<td>' + template.name + '</td>' +
-        '<td><select class="owned-variant">' + buildOptions(template.variantOptions) + '</select></td>' +
-        '<td><input type="number" class="quantity" min="1" max="10" value="1" /></td>' +
-        '<td><select class="condition"><option value="">Seleccionar</option><option>Sin uso</option><option>Con uso leve</option><option>Con defecto</option></select></td>' +
-        '<td class="change-col"><select class="replacement-product">' + buildOptions(template.productOptions) + '</select></td>' +
-        '<td class="change-col"><select class="replacement-variant"><option value="">Seleccionar</option></select></td>';
+        '<td class="check-cell" data-label="Incluir"><input type="checkbox" class="checkbox product-check" checked /></td>' +
+        '<td data-label="Producto">' + template.name + '</td>' +
+        '<td data-label="Variante actual"><select class="owned-variant">' + buildOptions(template.variantOptions) + '</select></td>' +
+        '<td data-label="Cantidad"><input type="number" class="quantity" min="1" max="10" value="1" /></td>' +
+        '<td data-label="Estado"><select class="condition"><option value="">Seleccionar</option><option>Sin uso</option><option>Con uso leve</option><option>Con defecto</option></select></td>' +
+        '<td class="change-col" data-label="Producto deseado"><select class="replacement-product">' + buildOptions(template.productOptions) + '</select></td>' +
+        '<td class="change-col" data-label="Variante deseada"><select class="replacement-variant"><option value="">Seleccionar</option></select></td>';
       syncReplacementVariantOptions(row);
       return row;
     }
