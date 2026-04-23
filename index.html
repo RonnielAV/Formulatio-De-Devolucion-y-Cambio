@@ -224,16 +224,22 @@
     }
 
     .table-wrap {
+      display: block;
       overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
       margin-bottom: 24px;
       border: 1px solid var(--line);
       border-radius: 14px;
+      max-width: 100%;
     }
 
     table {
-      width: 100%;
-      border-collapse: collapse;
+      width: max-content;
       min-width: 980px;
+      table-layout: fixed;
+      border-collapse: collapse;
       background: #fff;
     }
 
@@ -546,8 +552,59 @@
         grid-template-columns: 1fr;
       }
 
-      .container { margin: 16px auto; }
-      .header, .main-form, .sidebar, .footer { padding: 20px; }
+      .container {
+        margin: 0;
+        padding: 0;
+      }
+
+      .app-shell {
+        border-radius: 0;
+        overflow: visible;
+      }
+
+      .header, .main-form, .sidebar, .footer {
+        padding: 16px;
+      }
+
+      .brand-row {
+        align-items: flex-start;
+      }
+
+      .marketup-logo {
+        font-size: 42px;
+      }
+
+      .table-actions {
+        align-items: stretch;
+      }
+
+      .inline-select,
+      .mini-btn {
+        width: 100%;
+        max-width: none;
+      }
+
+      .table-wrap {
+        margin-left: -16px;
+        margin-right: -16px;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        padding-bottom: 6px;
+      }
+
+      table {
+        min-width: 1040px;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
     }
 
     @media print {
